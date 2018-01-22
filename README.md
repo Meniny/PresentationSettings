@@ -42,3 +42,28 @@ You are welcome to fork and submit pull requests.
 ## License
 
 `PresentationSettings` is open-sourced software, licensed under the `MIT` license.
+
+## Usage
+
+The simplest way:
+
+```swift
+@IBAction func showAlert(_ sender: UIButton) {
+    let alert = SomeController.init()
+    self.present(viewController: alert, settings: .default, animated: true, completion: nil)
+}
+```
+
+Create your custom presentation settings:
+
+```swift
+let type = PresentationType.dynamic(center: .center)
+let settings = PresentationSettings.init(presentationType: type)
+settings.transitionType = nil
+settings.dismissTransitionType = nil
+settings.dismissAnimated = true
+settings.dismissOnSwipe = false
+settings.dismissOnTap = false
+settings.keyboardTranslationType = .moveUp
+....
+```
