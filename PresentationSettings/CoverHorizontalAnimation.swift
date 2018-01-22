@@ -1,0 +1,22 @@
+
+import Foundation
+
+public class CoverHorizontalAnimation: PresentingAnimation {
+
+    private var fromRight: Bool
+
+    public init(fromRight: Bool = true) {
+        self.fromRight = fromRight
+    }
+
+    override public func transform(containerFrame: CGRect, finalFrame: CGRect) -> CGRect {
+        var initialFrame = finalFrame
+        if fromRight {
+            initialFrame.origin.x = containerFrame.size.width + initialFrame.size.width
+        } else {
+            initialFrame.origin.x = 0 - initialFrame.size.width
+        }
+        return initialFrame
+    }
+
+}

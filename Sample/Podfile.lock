@@ -1,0 +1,16 @@
+PODS:
+  - PresentationSettings (1.0.0)
+
+DEPENDENCIES:
+  - PresentationSettings (from `../`)
+
+EXTERNAL SOURCES:
+  PresentationSettings:
+    :path: ../
+
+SPEC CHECKSUMS:
+  PresentationSettings: 629f26c9350d2880d8be135abbdcd9ef013c1434
+
+PODFILE CHECKSUM: 4193179e1b672df94cbf3ed8118ac5e8a559bee3
+
+COCOAPODS: 1.4.0
