@@ -12,6 +12,7 @@ class PresentationController: UIPresentationController, UIAdaptivePresentationCo
     
     /// Should the presented controller dismiss on background Swipe.
     let dismissOnSwipe: Bool
+    var dismissSwipeLimit: CGFloat
 
     /// DismissSwipe direction
     let dismissOnSwipeDirection: DismissSwipeDirection
@@ -84,6 +85,7 @@ class PresentationController: UIPresentationController, UIAdaptivePresentationCo
          dismissOnTap: Bool,
          dismissOnSwipe: Bool,
          dismissOnSwipeDirection: DismissSwipeDirection,
+         dismissSwipeLimit: CGFloat,
          backgroundColor: UIColor,
          backgroundOpacity: Float,
          blurBackground: Bool,
@@ -100,6 +102,7 @@ class PresentationController: UIPresentationController, UIAdaptivePresentationCo
         self.dismissOnSwipeDirection = dismissOnSwipeDirection
         self.keyboardTranslationType = keyboardTranslationType
         self.dismissAnimated = dismissAnimated
+        self.dismissSwipeLimit = dismissSwipeLimit
         self.contextFrameForPresentation = contextFrameForPresentation
         self.shouldIgnoreTapOutsideContext = shouldIgnoreTapOutsideContext
         self.customBackgroundView = customBackgroundView
@@ -391,7 +394,7 @@ extension PresentationController {
             return
         }
 
-        var swipeLimit: CGFloat = 100
+        var swipeLimit: CGFloat = dismissSwipeLimit
         if shouldSwipeTop {
             swipeLimit = -swipeLimit
         }

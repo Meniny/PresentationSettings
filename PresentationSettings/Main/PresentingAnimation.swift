@@ -66,7 +66,12 @@ open class PresentingAnimation: NSObject {
         let finalFrameForVC = transitionContext.finalFrame
         let initialFrameForVC = transform(containerFrame: transitionContext.containerView.frame, finalFrame: finalFrameForVC)
 
-        let finalFrame = transitionContext.isPresenting ? finalFrameForVC : initialFrameForVC
+        let finalFrame: CGRect
+        if transitionContext.isPresenting {
+            finalFrame = finalFrameForVC
+        } else {
+            finalFrame = initialFrameForVC
+        }
         transitionContext.animatingView?.frame = finalFrame
     }
 

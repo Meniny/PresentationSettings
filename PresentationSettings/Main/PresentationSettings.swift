@@ -72,6 +72,8 @@ public class PresentationSettings: NSObject {
 
     /// If dismissOnSwipe is true, the direction for the swipe. Default depends on presentation type.
     public var dismissOnSwipeDirection: DismissSwipeDirection = .default
+    
+    public var dismissSwipeLimit: CGFloat = 40
 
     /// Should the presented controller use animation when dismiss on background tap or swipe. Default is true.
     public var dismissAnimated = true
@@ -120,15 +122,15 @@ public class PresentationSettings: NSObject {
     // MARK: Class Helper Methods
 
     /**
-     Public helper class method for creating and configuring an instance of the 'PTAlertController'
+     Public helper class method for creating and configuring an instance of the 'PTConfirmController'
 
      - parameter title: Title to be used in the Alert View Controller.
      - parameter body: Body of the message to be displayed in the Alert View Controller.
 
-     - returns: Returns a configured instance of 'PTAlertController'
+     - returns: Returns a configured instance of 'PTConfirmController'
      */
-    public static func alertViewController(title: String = PresentationConstants.Strings.alertTitle, body: String = PresentationConstants.Strings.alertBody) -> PTAlertController {
-        let alertController = PTAlertController()
+    public static func alertViewController(title: String = PresentationConstants.Strings.alertTitle, body: String = PresentationConstants.Strings.alertBody) -> PTConfirmController {
+        let alertController = PTConfirmController()
         alertController.titleText = title
         alertController.bodyText = body
         return alertController
@@ -171,7 +173,7 @@ extension PresentationSettings: UIViewControllerTransitioningDelegate {
     public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return transitionForPresent.animation()
     }
-
+    
     public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return transitionForDismiss.animation()
     }
@@ -188,6 +190,7 @@ extension PresentationSettings: UIViewControllerTransitioningDelegate {
                                     dismissOnTap: dismissOnTap,
                                     dismissOnSwipe: dismissOnSwipe,
                                     dismissOnSwipeDirection: dismissOnSwipeDirection,
+                                    dismissSwipeLimit: dismissSwipeLimit,
                                     backgroundColor: backgroundColor,
                                     backgroundOpacity: backgroundOpacity,
                                     blurBackground: blurBackground,
@@ -203,15 +206,28 @@ extension PresentationSettings: UIViewControllerTransitioningDelegate {
 
 public extension PresentationSettings {
     public static var `default`: PresentationSettings {
-        let type = PresentationType.dynamic(center: .center)
-        let settings = PresentationSettings.init(presentationType: type)
-        settings.transitionType = nil
-        settings.dismissTransitionType = nil
-        settings.dismissAnimated = true
-        settings.dismissOnSwipe = false
-        settings.dismissOnTap = false
-        settings.keyboardTranslationType = .moveUp
+        let settings = PresentationSettings.init(presentationType: .dynamic(center: .center))
+        settings.setToDefault()
         return settings
+    }
+    
+    public static var dynamic: PresentationSettings {
+        return PresentationSettings.default
+    }
+    
+    public static var fullScreen: PresentationSettings {
+        let settings = PresentationSettings.init(presentationType: .fullScreen)
+        settings.setToDefault()
+        return settings
+    }
+    
+    public func setToDefault() {
+        self.transitionType = nil
+        self.dismissTransitionType = nil
+        self.dismissAnimated = true
+        self.dismissOnSwipe = false
+        self.dismissOnTap = false
+        self.keyboardTranslationType = .moveUp
     }
     
     public static let suggestedViewWidth: CGFloat = 270

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PTLoadingViewController" customModule="PresentationSettings" customModuleProvider="target">
+            <connections>
+                <outlet property="activityIndicator" destination="M8F-W9-5aI" id="yq4-x4-Vz6"/>
+                <outlet property="containerView" destination="WKw-5A-2Yr" id="kLU-j8-42L"/>
+                <outlet property="infoLabel" destination="hY9-Gs-GAl" id="8Fa-zy-MOI"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WKw-5A-2Yr">
+                    <rect key="frame" x="87.5" y="263.5" width="200" height="140"/>
+                    <subviews>
+                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="M8F-W9-5aI">
+                            <rect key="frame" x="82" y="51.5" width="37" height="37"/>
+                            <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </activityIndicatorView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hY9-Gs-GAl">
+                            <rect key="frame" x="8" y="96.5" width="184" height="35.5"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="M8F-W9-5aI" firstAttribute="centerX" secondItem="WKw-5A-2Yr" secondAttribute="centerX" id="1pa-kY-X4p"/>
+                        <constraint firstItem="M8F-W9-5aI" firstAttribute="centerY" secondItem="WKw-5A-2Yr" secondAttribute="centerY" id="GXa-3e-PxU"/>
+                        <constraint firstItem="hY9-Gs-GAl" firstAttribute="top" secondItem="M8F-W9-5aI" secondAttribute="bottom" constant="8" id="H7m-4d-jux"/>
+                        <constraint firstAttribute="width" constant="200" id="XCq-xf-DBW"/>
+                        <constraint firstAttribute="bottom" secondItem="hY9-Gs-GAl" secondAttribute="bottom" constant="8" id="hhP-Eo-LZx"/>
+                        <constraint firstAttribute="width" secondItem="WKw-5A-2Yr" secondAttribute="height" multiplier="1:0.7" id="lPJ-oR-eXf"/>
+                        <constraint firstAttribute="trailing" secondItem="hY9-Gs-GAl" secondAttribute="trailing" constant="8" id="vJ4-yX-xZV"/>
+                        <constraint firstItem="hY9-Gs-GAl" firstAttribute="leading" secondItem="WKw-5A-2Yr" secondAttribute="leading" constant="8" id="zyS-fM-jJj"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="WKw-5A-2Yr" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="1PT-x1-Zh9"/>
+                <constraint firstItem="WKw-5A-2Yr" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="9us-UW-68t"/>
+                <constraint firstItem="WKw-5A-2Yr" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="NDi-VO-8Pg"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="WKw-5A-2Yr" secondAttribute="trailing" id="cli-P4-5kd"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="WKw-5A-2Yr" secondAttribute="bottom" id="llR-lU-GAx"/>
+                <constraint firstItem="WKw-5A-2Yr" firstAttribute="top" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="top" id="wGU-mc-IGs"/>
+            </constraints>
+        </view>
+    </objects>
+</document>

@@ -3,7 +3,7 @@ import UIKit
 
 public typealias AlertActionHandler = ((AlertAction) -> Void)
 
-/// Describes each action that is going to be shown in the 'PTAlertController'
+/// Describes each action that is going to be shown in the 'PTConfirmController'
 public class AlertAction {
 
     public let title: String
@@ -61,95 +61,64 @@ public enum AlertActionStyle {
 
 }
 
-//private enum Font: String {
-//
-//    case Montserrat = "Montserrat-Regular"
-//    case SourceSansPro = "SourceSansPro-Regular"
-//
-//    func font(_ size: CGFloat = 15.0) -> UIFont {
-//        return UIFont(name: self.rawValue, size: size)!
-//    }
-//
-//}
-
 private struct ColorPalette {
-
     static let grayColor = UIColor(red: 151.0/255.0, green: 151.0/255.0, blue: 151.0/255.0, alpha: 1)
     static let greenColor = UIColor(red: 58.0/255.0, green: 213.0/255.0, blue: 91.0/255.0, alpha: 1)
     static let redColor = UIColor(red: 255.0/255.0, green: 103.0/255.0, blue: 100.0/255.0, alpha: 1)
-
 }
 
 /// UIViewController subclass that displays the alert
-public class PTAlertController: UIViewController {
+open class PTConfirmController: UIViewController {
 
     /// Text that will be used as the title for the alert
-    public var titleText: String?
+    open var titleText: String?
 
     /// Text that will be used as the body for the alert
-    public var bodyText: String?
+    open var bodyText: String?
 
     /// If set to false, alert wont auto-dismiss the controller when an action is clicked. Dismissal will be up to the action's handler. Default is true.
-    public var autoDismiss: Bool = true
+    open var autoDismiss: Bool = true
 
     /// If autoDismiss is set to true, then set this property if you want the dismissal to be animated. Default is true.
-    public var dismissAnimated: Bool = true
+    open var dismissAnimated: Bool = true
 
     fileprivate var actions = [AlertAction]()
 
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var bodyLabel: UILabel!
-    @IBOutlet weak var firstButton: UIButton!
-    @IBOutlet weak var secondButton: UIButton!
-    @IBOutlet weak var firstButtonWidthConstraint: NSLayoutConstraint!
+    @IBOutlet open weak var titleLabel: UILabel!
+    @IBOutlet open weak var bodyLabel: UILabel!
+    @IBOutlet open weak var firstButton: UIButton!
+    @IBOutlet open weak var secondButton: UIButton!
+    @IBOutlet open weak var firstButtonWidthConstraint: NSLayoutConstraint!
 
     public convenience init() {
-        self.init(nibName: "PTAlertController", bundle: Bundle.init(for: type(of: self)))
-    }
-    
-    override public func loadView() {
-        let name = "PTAlertController"
-        let bundle = Bundle(for: type(of: self))
-        guard let view = bundle.loadNibNamed(name, owner: self, options: nil)?.first as? UIView else {
-            fatalError("Nib not found.")
-        }
-        self.view = view
+        self.init(nibName: "PTConfirmController", bundle: Bundle.init(for: type(of: self)))
     }
 
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.view.layer.cornerRadius = 3
-        self.view.clipsToBounds = true
 
         if actions.isEmpty {
             let okAction = AlertAction(title: "Done", style: .default, handler: nil)
             addAction(okAction)
         }
-
-//        loadFonts
-
-        setupFonts()
-        setupLabels()
-        setupButtons()
-    }
-
-    override public func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-
-    override public func updateViewConstraints() {
+        
         if actions.count == 1 {
             // If only one action, second button will have been removed from superview
             // So, need to add constraint for first button trailing to superview
-            if let constraint = firstButtonWidthConstraint {
-                view.removeConstraint(constraint)
+            if let f = self.firstButtonWidthConstraint {
+                self.view.removeConstraint(f)
             }
-            let views: [String: UIView] = ["button" : firstButton]
-            let constraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[button]-0-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
-            view.addConstraints(constraints)
+            //            let views: [String: UIView] = ["button" : firstButton]
+            //            let constraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[button]-0-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
+            //            view.addConstraints(constraints)
+            let constraint = NSLayoutConstraint.init(item: firstButton, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1, constant: 0)
+            view.addConstraint(constraint)
+            view.layoutIfNeeded()
         }
-        super.updateViewConstraints()
+        
+        setupFonts()
+        setupLabels()
+        setupButtons()
     }
 
     // MARK: AlertAction's
@@ -159,7 +128,7 @@ public class PTAlertController: UIViewController {
 
      - parameter action: The 'AlertAction' to be added
      */
-    public func addAction(_ action: AlertAction) {
+    open func addAction(_ action: AlertAction) {
         guard actions.count < 2 else { return }
         actions += [action]
     }
@@ -167,10 +136,10 @@ public class PTAlertController: UIViewController {
     // MARK: Setup
 
     fileprivate func setupFonts() {
-        titleLabel.font = UIFont.systemFont(ofSize: 17)//Font.Montserrat.font()
-        bodyLabel.font = UIFont.systemFont(ofSize: 14)//Font.SourceSansPro.font()
-        firstButton.titleLabel?.font = UIFont.systemFont(ofSize: 14)//Font.Montserrat.font(11.0)
-        secondButton.titleLabel?.font = UIFont.systemFont(ofSize: 14)//Font.Montserrat.font(11.0)
+        titleLabel.font = UIFont.systemFont(ofSize: 17)
+        bodyLabel.font = UIFont.systemFont(ofSize: 14)
+        firstButton.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        secondButton.titleLabel?.font = UIFont.systemFont(ofSize: 14)
     }
 
     fileprivate func setupLabels() {
@@ -198,7 +167,7 @@ public class PTAlertController: UIViewController {
 
     // MARK: IBAction's
 
-    @IBAction func didSelectFirstAction(_ sender: AnyObject) {
+    @IBAction private func didSelectFirstAction(_ sender: AnyObject) {
         guard let firstAction = actions.first else { return }
         if let handler = firstAction.handler {
             handler(firstAction)
@@ -206,7 +175,7 @@ public class PTAlertController: UIViewController {
         dismiss()
     }
 
-    @IBAction func didSelectSecondAction(_ sender: AnyObject) {
+    @IBAction private func didSelectSecondAction(_ sender: AnyObject) {
         guard let secondAction = actions.last, actions.count == 2 else { return }
         if let handler = secondAction.handler {
             handler(secondAction)
@@ -216,44 +185,9 @@ public class PTAlertController: UIViewController {
 
     // MARK: Helper's
 
-    func dismiss() {
+    open func dismiss() {
         guard autoDismiss else { return }
         self.dismiss(animated: dismissAnimated, completion: nil)
-    }
-
-}
-
-//// MARK: - Font Loading
-//
-//let loadFonts: () = {
-//    let loadedFontMontserrat = PTAlertController.loadFont(Font.Montserrat.rawValue)
-//    let loadedFontSourceSansPro = PTAlertController.loadFont(Font.SourceSansPro.rawValue)
-//    if loadedFontMontserrat && loadedFontSourceSansPro {
-//        print("LOADED FONTS")
-//    }
-//}()
-
-extension PTAlertController {
-
-    static func loadFont(_ name: String) -> Bool {
-        let bundle = Bundle(for: self)
-        guard let fontPath = bundle.path(forResource: name, ofType: "ttf"),
-            let data = try? Data(contentsOf: URL(fileURLWithPath: fontPath)),
-            let provider = CGDataProvider(data: data as CFData),
-            let font = CGFont(provider)
-        else {
-            return false
-        }
-
-        var error: Unmanaged<CFError>?
-
-        let success = CTFontManagerRegisterGraphicsFont(font, &error)
-        if !success {
-            print("Error loading font. Font is possibly already registered.")
-            return false
-        }
-
-        return true
     }
 
 }
