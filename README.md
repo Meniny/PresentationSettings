@@ -22,6 +22,21 @@
 
 Configuration for `UIViewController` presentation.
 
+
+## Preview
+
+<table>
+<tr>
+<td><img src="./Assets/alert.gif"/></td>
+<td><img src="./Assets/loading.gif"/></td>
+</tr>
+<tr>
+<td><img src="./Assets/notification.gif"/></td>
+<td><img src="./Assets/snack.gif"/></td>
+</tr>
+</table>
+
+
 ## Requirements
 
 * iOS 8.0+
