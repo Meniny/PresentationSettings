@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'PresentationSettings'
-  s.version          = "1.1.0"
+  s.version          = "1.1.1"
   s.summary          = "Configuration for UIViewController presentation."
   s.homepage         = "https://github.com/Meniny/SuperAlertController"
   s.license          = { :type => "MIT", :file => "LICENSE.md" }

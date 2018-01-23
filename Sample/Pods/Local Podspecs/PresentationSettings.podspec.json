@@ -1,6 +1,6 @@
 {
   "name": "PresentationSettings",
-  "version": "1.0.0",
+  "version": "1.1.1",
   "summary": "Configuration for UIViewController presentation.",
   "homepage": "https://github.com/Meniny/SuperAlertController",
   "license": {
@@ -10,7 +10,7 @@
   "authors": "Elias Abel",
   "source": {
     "git": "https://github.com/Meniny/PresentationSettings.git",
-    "tag": "1.0.0"
+    "tag": "1.1.1"
   },
   "swift_version": "4.0",
   "social_media_url": "https://meniny.cn/",

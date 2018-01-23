@@ -1,5 +1,5 @@
 PODS:
-  - PresentationSettings (1.0.0)
+  - PresentationSettings (1.1.1)
 
 DEPENDENCIES:
   - PresentationSettings (from `../`)
@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  PresentationSettings: 629f26c9350d2880d8be135abbdcd9ef013c1434
+  PresentationSettings: 5b5f5ba4b68ae874b1a6271323af74ee6d7bb03c
 
 PODFILE CHECKSUM: 4193179e1b672df94cbf3ed8118ac5e8a559bee3
 

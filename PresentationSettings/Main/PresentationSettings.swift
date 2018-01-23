@@ -243,8 +243,14 @@ public extension UIViewController {
     ///   - viewController: The view controller to be presented.
     ///   - settings: PresentationSettings object used for custom presentation.
     ///   - animated: Animation setting for the presentation.
+    ///   - prepare: Prepare closure
     ///   - completion: Completion handler.
-    public func present(viewController: UIViewController, settings: PresentationSettings, animated: Bool, completion: (() -> Void)? = nil) {
+    public func present(viewController: UIViewController,
+                        settings: PresentationSettings,
+                        animated: Bool,
+                        prepare: (() -> Void)? = nil,
+                        completion: (() -> Void)? = nil) {
+        prepare?()
         settings.present(viewController: viewController,
                          by: self,
                          animated: animated,
