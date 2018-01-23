@@ -236,25 +236,79 @@ public extension PresentationSettings {
 // MARK: - UIViewController extension to provide customPresentViewController(_:viewController:animated:completion:) method
 
 public extension UIViewController {
+    
+    public static let presentationQueue = DispatchQueue.init(label: "PT_UIViewControllerPresentationQueue")
+    public static let presentationSemaphore = DispatchSemaphore.init(value: 1)
 
     /// Present a view controller with a custom presentation provided by the PresentationSettings object.
+    ///
+    /// ‼️ If set `serial` to `true`, please remember to call `-presentationSerialContinute()` after dismissed or simply call  `-dismiss(fromSerial:animated:completion:)` to dismiss:
+    ///
+    /// ```swift
+    /// presentedController.presentationSerialContinute()
+    /// presentedController.dismiss(animated: true, completion: nil)
+    /// ```
+    ///
+    /// Or:
+    ///
+    /// ```swift
+    /// presentedController.dismiss(fromSerial: true, animated: true, completion: nil)
+    /// ```
     ///
     /// - Parameters:
     ///   - viewController: The view controller to be presented.
     ///   - settings: PresentationSettings object used for custom presentation.
     ///   - animated: Animation setting for the presentation.
-    ///   - prepare: Prepare closure
+    ///   - serial: Serial, default is `false`
     ///   - completion: Completion handler.
     public func present(viewController: UIViewController,
                         settings: PresentationSettings,
                         animated: Bool,
-                        prepare: (() -> Void)? = nil,
+                        serial: Bool = false,
                         completion: (() -> Void)? = nil) {
-        prepare?()
-        settings.present(viewController: viewController,
-                         by: self,
-                         animated: animated,
-                         completion: completion)
+        if serial {
+            type(of: self).presentationQueue.async {
+                self.presentationSerialWait()
+                self.private_present(viewController: viewController, settings: settings, animated: animated, completion: completion)
+            }
+        } else {
+            self.private_present(viewController: viewController, settings: settings, animated: animated, completion: completion)
+        }
+    }
+    
+    private func private_present(viewController: UIViewController,
+                            settings: PresentationSettings,
+                            animated: Bool,
+                            completion: (() -> Void)?) {
+        DispatchQueue.main.async {
+            settings.present(viewController: viewController,
+                             by: self,
+                             animated: animated,
+                             completion: completion)
+        }
+    }
+    
+    /// Semaphore wait
+    public func presentationSerialWait() {
+        type(of: self).presentationSemaphore.wait()
+    }
+    
+    /// Semaphore signal
+    public func presentationSerialContinute() {
+        type(of: self).presentationSemaphore.signal()
+    }
+    
+    /// Dismiss the view controller
+    ///
+    /// - Parameters:
+    ///   - serial: Call `semaphore.signal()` if `true`
+    ///   - animated: If animated
+    ///   - completion: Completion closure
+    public func dismiss(fromSerial serial: Bool, animated: Bool, completion: (() -> Void)?) {
+        if serial {
+            self.presentationSerialContinute()
+        }
+        self.dismiss(animated: animated, completion: completion)
     }
 
 }
