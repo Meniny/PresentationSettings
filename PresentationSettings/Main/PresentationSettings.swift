@@ -235,10 +235,10 @@ public extension PresentationSettings {
 
 // MARK: - UIViewController extension to provide customPresentViewController(_:viewController:animated:completion:) method
 
+public let kPresentationQueue = DispatchQueue.init(label: "PT_UIViewControllerPresentationQueue")
+public let kPresentationSemaphore = DispatchSemaphore.init(value: 1)
+
 public extension UIViewController {
-    
-    public static let presentationQueue = DispatchQueue.init(label: "PT_UIViewControllerPresentationQueue")
-    public static let presentationSemaphore = DispatchSemaphore.init(value: 1)
 
     /// Present a view controller with a custom presentation provided by the PresentationSettings object.
     ///
@@ -267,7 +267,7 @@ public extension UIViewController {
                         serial: Bool = false,
                         completion: (() -> Void)? = nil) {
         if serial {
-            type(of: self).presentationQueue.async {
+            kPresentationQueue.async {
                 self.presentationSerialWait()
                 self.private_present(viewController: viewController, settings: settings, animated: animated, completion: completion)
             }
@@ -290,12 +290,12 @@ public extension UIViewController {
     
     /// Semaphore wait
     public func presentationSerialWait() {
-        type(of: self).presentationSemaphore.wait()
+        kPresentationSemaphore.wait()
     }
     
     /// Semaphore signal
     public func presentationSerialContinute() {
-        type(of: self).presentationSemaphore.signal()
+        kPresentationSemaphore.signal()
     }
     
     /// Dismiss the view controller

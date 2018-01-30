@@ -26,7 +26,7 @@
 		5C3BB64D201636E80083CDC4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5C3BB64F201636E80083CDC4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5C3BB65520163AFC0083CDC4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
-		5C3BB65620163AFC0083CDC4 /* PresentationSettings.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; name = PresentationSettings.podspec; path = ../PresentationSettings.podspec; sourceTree = "<group>"; };
+		5C3BB65620163AFC0083CDC4 /* PresentationSettings.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; name = PresentationSettings.podspec; path = ../PresentationSettings.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		5C3BB65720163AFC0083CDC4 /* LICENSE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = LICENSE.md; path = ../LICENSE.md; sourceTree = "<group>"; };
 		5C3BB65820163AFC0083CDC4 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Package.swift; path = ../Package.swift; sourceTree = "<group>"; };
 		5C3BB65920163B010083CDC4 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; name = .gitignore; path = ../.gitignore; sourceTree = "<group>"; };
