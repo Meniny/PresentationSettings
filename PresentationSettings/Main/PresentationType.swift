@@ -1,6 +1,25 @@
 
 import Foundation
 
+public enum PresentationBackground: Equatable {
+    case blur(UIBlurEffectStyle)
+    case color(UIColor, alpha: CGFloat)
+    case view(UIView)
+    
+    public static func ==(lhs: PresentationBackground, rhs: PresentationBackground) -> Bool {
+        switch (lhs, rhs) {
+        case let (.blur(a), .blur(b)):
+            return a == b
+        case let (.color(a, b), .color(c, d)):
+            return a == c && b == d
+        case let (.view(a), .view(b)):
+            return a == b
+        default:
+            return false
+        }
+    }
+}
+
 /// Basic PresentationSettings type. Its job is to describe the 'type' of presentation. The type describes the size and position of the presented view controller.
 ///
 /// - alert: This is a small 270 x 180 alert which is the same size as the default iOS alert.
@@ -11,7 +30,6 @@ import Foundation
 /// - dynamic: Uses autolayout to calculate width & height. Have to provide center position.
 /// - custom: User provided custom width, height & center position.
 public enum PresentationType {
-
     case alert
     case popup
     case topHalf

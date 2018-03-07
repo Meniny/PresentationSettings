@@ -30,7 +30,7 @@ class PresentationController: UIPresentationController, UIAdaptivePresentationCo
     let shouldIgnoreTapOutsideContext: Bool
 
     /// A custom background view to be added on top of the regular background view.
-    let customBackgroundView: UIView?
+    private(set) var customBackgroundView: UIView?
 
     fileprivate var conformingPresentedController: PresentationSettingsDelegate? {
         return presentedViewController as? PresentationSettingsDelegate
@@ -86,11 +86,7 @@ class PresentationController: UIPresentationController, UIAdaptivePresentationCo
          dismissOnSwipe: Bool,
          dismissOnSwipeDirection: DismissSwipeDirection,
          dismissSwipeLimit: CGFloat,
-         backgroundColor: UIColor,
-         backgroundOpacity: Float,
-         blurBackground: Bool,
-         blurStyle: UIBlurEffectStyle,
-         customBackgroundView: UIView?,
+         background: PresentationBackground,
          keyboardTranslationType: KeyboardTranslationType,
          dismissAnimated: Bool,
          contextFrameForPresentation: CGRect?,
@@ -105,11 +101,10 @@ class PresentationController: UIPresentationController, UIAdaptivePresentationCo
         self.dismissSwipeLimit = dismissSwipeLimit
         self.contextFrameForPresentation = contextFrameForPresentation
         self.shouldIgnoreTapOutsideContext = shouldIgnoreTapOutsideContext
-        self.customBackgroundView = customBackgroundView
 
         super.init(presentedViewController: presentedViewController, presenting: presentingViewController)
         
-        setupBackground(backgroundColor, backgroundOpacity: backgroundOpacity, blurBackground: blurBackground, blurStyle: blurStyle)
+        setupBackground(background)
         setupCornerRadius(roundCorners: roundCorners, cornerRadius: cornerRadius)
         addDropShadow(shadow: dropShadow)
         
@@ -129,7 +124,7 @@ class PresentationController: UIPresentationController, UIAdaptivePresentationCo
         presentedViewController.view.addGestureRecognizer(swipe)
     }
     
-    private func setupBackground(_ backgroundColor: UIColor, backgroundOpacity: Float, blurBackground: Bool, blurStyle: UIBlurEffectStyle) {
+    private func setupBackground(_ back: PresentationBackground) {
         let tap = UITapGestureRecognizer(target: self, action: #selector(chromeViewTapped))
         chromeView.addGestureRecognizer(tap)
 
@@ -138,10 +133,16 @@ class PresentationController: UIPresentationController, UIAdaptivePresentationCo
             backgroundView.addGestureRecognizer(tap)
         }
 
-        if blurBackground {
-            visualEffect = UIBlurEffect(style: blurStyle)
-        } else {
-            chromeView.backgroundColor = backgroundColor.withAlphaComponent(CGFloat(backgroundOpacity))
+        switch back {
+        case .blur(let style):
+            visualEffect = UIBlurEffect(style: style)
+            break
+        case .color(let c, let a):
+            chromeView.backgroundColor = c.withAlphaComponent(a)
+            break
+        case .view(let v):
+            customBackgroundView = v
+            break
         }
     }
 
@@ -246,6 +247,8 @@ extension PresentationController {
 
         if let customBackgroundView = customBackgroundView {
             chromeView.addSubview(customBackgroundView)
+            customBackgroundView.frame = chromeView.bounds
+            customBackgroundView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         }
 
         var blurEffectView: UIVisualEffectView?
